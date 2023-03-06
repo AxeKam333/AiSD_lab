@@ -1,5 +1,3 @@
-
-
 1. Omawiane algorytmy:
 
     proste:
