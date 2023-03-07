@@ -1,16 +1,16 @@
 1. Omawiane algorytmy:
 
     proste:
-    SS (przez proste wybieranie), 
-    IS (przez proste wstawianie), 
-    BS (bąbelkowe), 
+    SS (przez proste wybieranie), Olaf
+    IS (przez proste wstawianie), Olaf
+    BS (bąbelkowe), Olek
     
-    HS (stogowe/kopcowe), 
-    MS (przez scalanie), 
-    QS (szybkie z podziałem:
+    HS (stogowe/kopcowe), Olek
+    MS (przez scalanie), Olek
+    QS (szybkie z podziałem: Olaf
         QS1 wg skrajnego 
         QS2 i środkowego elementu tablicy),
-    CS (przez zliczanie)
+    CS (przez zliczanie) Olaf
 
 2. Kategorie podziału algorytmów sortowania:
 
