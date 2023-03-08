@@ -7,14 +7,16 @@
     
     BS (bąbelkowe), Olek
     
+   trudniejsze:
     HS (stogowe/kopcowe), Olek
     
     MS (przez scalanie), Olek
     
-    QS (szybkie z podziałem: Olaf
-    
-        QS1 wg skrajnego 
-        QS2 i środkowego elementu tablicy),
+    QS (szybkie Olaf
+
+    z podziałem: 
+    QS1 wg skrajnego 
+    QS2 i środkowego elementu tablicy),
         
     CS (przez zliczanie) Olaf
 
