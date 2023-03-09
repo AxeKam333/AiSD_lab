@@ -50,8 +50,43 @@ def merge(dq):
             k += 1
         return dq
 
+def count(dq):
+    dlugosc = len(dq)
+    zliczone = [0]*dlugosc
+    output = [None]*dlugosc
+    for i in range(dlugosc):
+        zliczone[dq[i]] += 1
+    for i in range(dlugosc-1, -1, -1):
+        output[zliczone[dq[i]] - 1] = dq[i]
+        zliczone[dq[i]] -= 1
+    dq = output
+    return dq
+
+def select(dq):
+    dlugosc = len(dq)
+    for i in range(dlugosc):
+        najmniejszy = dq[i]
+        indeks_min = i
+        for j in range(i, dlugosc):
+            if(dq[j] < najmniejszy):
+                najmniejszy = dq[j]
+                indeks_min = j
+        dq[i], dq[indeks_min] = dq[indeks_min], dq[i]
+    return dq
+
+def insertion(dq):
+    dlugosc = len(dq)
+    for i in range(dlugosc):
+        j = i
+        while(j > 0 and dq[j-1] > dq[j])
+            dq[j-1], dq[j] = dq[j], dq[j-1]
+    return dq
+    
 
 lista = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 bubble(lista)
 heap(lista)
 merge(lista)
+count(lista)
+select(lista)
+insertion(lista)
