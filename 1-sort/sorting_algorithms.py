@@ -81,7 +81,7 @@ def insertion(dq):
     dlugosc = len(dq)
     for i in range(dlugosc):
         j = i
-        while(j > 0 and dq[j-1] > dq[j])
+        while(j > 0 and dq[j-1] > dq[j]):
             dq[j-1], dq[j] = dq[j], dq[j-1]
     return dq
 
@@ -104,9 +104,9 @@ def podzial(dq, p, r, pivot):
     i = p
     j = r
     while True:
-        while dq[i] < piwot
+        while dq[i] < piwot:
             i += 1
-        while dq[j] > piwot
+        while dq[j] > piwot:
             j -= 1
         if(i < j):
             dq[i], dq[j] = dq[j], dq[i]
@@ -117,8 +117,7 @@ def podzial(dq, p, r, pivot):
 
 #nazwa pliku wynikowego moze byc dowolna, ale musi zostac zmieniona rowniez w ostatniej petli
 wynikowy = open("wyniki.txt", "w")
-lista = [None]*500
-nowe = [None]*500
+wielkosc = 500
 
 #tablica wlaczniki sluzy do sterowania tym, ktore algorytmy sortowania zostana wykonane razem z pomiarem czasu, a ktore wcale
 wlaczniki = {'bubble':True, 'heap':True, 'merge':True, 'count':True, 'count':True, 'select':True, 'insertion':True, 'quick_skrajny':True, 'quick_srodkowy':True}
@@ -126,10 +125,11 @@ wyniki = {'wielkosci':[]}
 
 for element in wlaczniki:
 	if(wlaczniki[element]):
-		wyniki['element'] = []
+		wyniki[element] = []
 
 for i in range(10):
-	lista += nowe
+	wielkosc += 500
+	lista = [None]*wielkosc
 	wyniki['wielkosci'].append(len(lista))
 	for j in range(len(lista))::
 		lista[j] = randint(0, len(lista))
@@ -137,44 +137,51 @@ for i in range(10):
 	if(wlaczniki['bubble']):
 		start_time = time.time()
 		bubble(lista)
-		czas = time.time() - start_time
+		time.sleep(0.5)
+		czas = time.time() - start_time - 0.5
 		wyniki['bubble'].append(czas)
 	if(wlaczniki['heap']):
 		start_time = time.time()
 		heap(lista)
-		czas = time.time() - start_time
+		time.sleep(0.5)
+		czas = time.time() - start_time - 0.5
 		wyniki['heap'].append(czas)
 	if(wlaczniki['merge']):
 		start_time = time.time()
 		merge(lista)
-		czas = time.time() - start_time
+		time.sleep(0.5)
+		czas = time.time() - start_time - 0.5
 		wyniki['merge'].append(czas)
 	if(wlaczniki['count']):
 		start_time = time.time()
 		count(lista)
-		czas = time.time() - start_time
+		time.sleep(0.5)
+		czas = time.time() - start_time - 0.5
 		wyniki['count'].append(czas)
 	if(wlaczniki['select']):
 		if(wyniki.get('select') == None):
 			wyniki['select'] = []
 		start_time = time.time()
 		select(lista)
-		czas = time.time() - start_time
+		czas = time.time() - start_time - 0.5
 		wyniki['select'].append(czas)
 	if(wlaczniki['insertion']):
 		start_time = time.time()
 		insertion(lista)
-		czas = time.time() - start_time
+		time.sleep(0.5)
+		czas = time.time() - start_time - 0.5
 		wyniki['insertion'].append(czas)
 	if(wlaczniki['quick_skrajny']):
 		start_time = time.time()
 		quick_skrajny(lista)
-		czas = time.time() - start_time
+		time.sleep(0.5)
+		czas = time.time() - start_time - 0.5
 		wyniki['quick_skrajny'].append(czas)
 	if(wlaczniki['quick_srodkowy']):
 		start_time = time.time()
 		quick_srodkowy(lista)
-		czas = time.time() - start_time
+		time.sleep(0.5)
+		czas = time.time() - start_time - 0.5
 		wyniki['quick_srodkowy'].append(czas)
 		
 for element in wyniki:
