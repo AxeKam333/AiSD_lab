@@ -132,8 +132,8 @@ for i in range(10):
 	lista = [None]*wielkosc
 	wyniki['wielkosci'].append(len(lista))
 	for j in range(len(lista))::
-		lista[j] = randint(0, len(lista))
-	lista = [9, 8, 7, 6, 5, 4, 3, 2, 1]
+		lista[j] = random.randint(0, len(lista))
+	#lista = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 	if(wlaczniki['bubble']):
 		start_time = time.time()
 		bubble(lista)
@@ -159,8 +159,6 @@ for i in range(10):
 		czas = time.time() - start_time - 0.5
 		wyniki['count'].append(czas)
 	if(wlaczniki['select']):
-		if(wyniki.get('select') == None):
-			wyniki['select'] = []
 		start_time = time.time()
 		select(lista)
 		czas = time.time() - start_time - 0.5
