@@ -1,5 +1,8 @@
 import heapq
+import random
+import time
 
+#cale sterowanie odbywa sie za pomoca slownika 'wlaczniki' ponizej funkcji sortujacych
 
 def bubble(dq):
     sortd = False
@@ -112,12 +115,71 @@ def podzial(dq, p, r, pivot):
         else:
             return j
 
-lista = [9, 8, 7, 6, 5, 4, 3, 2, 1]
-bubble(lista)
-heap(lista)
-merge(lista)
-count(lista)
-select(lista)
-insertion(lista)
-quick_skrajny(lista)
-quick_srodkowy(lista)
+#nazwa pliku wynikowego moze byc dowolna, ale musi zostac zmieniona rowniez w ostatniej petli
+wynikowy = open("wyniki.txt", "w")
+lista = [None]*500
+nowe = [None]*500
+
+#tablica wlaczniki sluzy do sterowania tym, ktore algorytmy sortowania zostana wykonane razem z pomiarem czasu, a ktore wcale
+wlaczniki = {'bubble':True, 'heap':True, 'merge':True, 'count':True, 'count':True, 'select':True, 'insertion':True, 'quick_skrajny':True, 'quick_srodkowy':True}
+wyniki = {'wielkosci':[]}
+
+for element in wlaczniki:
+	if(wlaczniki[element]):
+		wyniki['element'] = []
+
+for i in range(10):
+	lista += nowe
+	wyniki['wielkosci'].append(len(lista))
+	for j in range(len(lista))::
+		lista[j] = randint(0, len(lista))
+	lista = [9, 8, 7, 6, 5, 4, 3, 2, 1]
+	if(wlaczniki['bubble']):
+		start_time = time.time()
+		bubble(lista)
+		czas = time.time() - start_time
+		wyniki['bubble'].append(czas)
+	if(wlaczniki['heap']):
+		start_time = time.time()
+		heap(lista)
+		czas = time.time() - start_time
+		wyniki['heap'].append(czas)
+	if(wlaczniki['merge']):
+		start_time = time.time()
+		merge(lista)
+		czas = time.time() - start_time
+		wyniki['merge'].append(czas)
+	if(wlaczniki['count']):
+		start_time = time.time()
+		count(lista)
+		czas = time.time() - start_time
+		wyniki['count'].append(czas)
+	if(wlaczniki['select']):
+		if(wyniki.get('select') == None):
+			wyniki['select'] = []
+		start_time = time.time()
+		select(lista)
+		czas = time.time() - start_time
+		wyniki['select'].append(czas)
+	if(wlaczniki['insertion']):
+		start_time = time.time()
+		insertion(lista)
+		czas = time.time() - start_time
+		wyniki['insertion'].append(czas)
+	if(wlaczniki['quick_skrajny']):
+		start_time = time.time()
+		quick_skrajny(lista)
+		czas = time.time() - start_time
+		wyniki['quick_skrajny'].append(czas)
+	if(wlaczniki['quick_srodkowy']):
+		start_time = time.time()
+		quick_srodkowy(lista)
+		czas = time.time() - start_time
+		wyniki['quick_srodkowy'].append(czas)
+		
+for element in wyniki:
+	wypis = element
+	for i in range(len(wyniki[element])):
+		wypis += '\t'+str(wyniki[element][i])
+	wypis += '\n'
+	wynikowy.write(wypis)
