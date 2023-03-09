@@ -81,7 +81,36 @@ def insertion(dq):
         while(j > 0 and dq[j-1] > dq[j])
             dq[j-1], dq[j] = dq[j], dq[j-1]
     return dq
-    
+
+def quick_skrajny(dq, p, r):
+    if(p < r):
+        q = podzial(dq, p, r, r)
+        quick_skrajny(dq, p, q)
+        quick_skrajny(dq, q+1, r)
+    return dq
+
+def quick_srodkowy(dq, p, r):
+    if(p < r):
+        q = podzial(dq, p, r, int((p+r)/2))
+        quick_srodkowy(dq, p, q)
+        quick_srodkowy(dq, q+1, r)
+    return dq
+
+def podzial(dq, p, r, pivot):
+    piwot = dq[pivot]
+    i = p
+    j = r
+    while True:
+        while dq[i] < piwot
+            i += 1
+        while dq[j] > piwot
+            j -= 1
+        if(i < j):
+            dq[i], dq[j] = dq[j], dq[i]
+            i += 1
+            j -= 1
+        else:
+            return j
 
 lista = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 bubble(lista)
@@ -90,3 +119,5 @@ merge(lista)
 count(lista)
 select(lista)
 insertion(lista)
+quick_skrajny(lista)
+quick_srodkowy(lista)
