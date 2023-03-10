@@ -85,35 +85,30 @@ def insertion(dq):
             dq[j-1], dq[j] = dq[j], dq[j-1]
     return dq
 
+def podzial(dq, p, r, pivot):
+    piwot = dq[pivot]
+    i = p-1
+    j = r
+    for j in range(p,r):
+        if(dq[j] <= piwot):
+            i += 1
+            dq[i], dq[j] = dq[j], dq[i]
+    dq[i+1], dq[r] = dq[r], dq[i+1]
+    return i+1
+
 def quick_skrajny(dq, p, r):
     if(p < r):
         q = podzial(dq, p, r, r)
-        quick_skrajny(dq, p, q)
+        quick_skrajny(dq, p, q-1)
         quick_skrajny(dq, q+1, r)
     return dq
 
 def quick_srodkowy(dq, p, r):
     if(p < r):
         q = podzial(dq, p, r, int((p+r)/2))
-        quick_srodkowy(dq, p, q)
+        quick_srodkowy(dq, p, q-1)
         quick_srodkowy(dq, q+1, r)
     return dq
-
-def podzial(dq, p, r, pivot):
-    piwot = dq[pivot]
-    i = p
-    j = r
-    while True:
-        while dq[i] < piwot:
-            i += 1
-        while dq[j] > piwot:
-            j -= 1
-        if(i < j):
-            dq[i], dq[j] = dq[j], dq[i]
-            i += 1
-            j -= 1
-        else:
-            return j
 
 #nazwa pliku wynikowego moze byc dowolna, ale musi zostac zmieniona rowniez w ostatniej petli
 wynikowy = open("wyniki.txt", "w")
