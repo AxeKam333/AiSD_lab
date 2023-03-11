@@ -1,6 +1,7 @@
 import heapq
 import random
 import time
+sys.setrecursionlimit(6000)
 
 #cale sterowanie odbywa sie za pomoca slownika 'wlaczniki' ponizej funkcji sortujacych
 
