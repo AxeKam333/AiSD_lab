@@ -55,14 +55,18 @@ def merge(dq):
 
 def count(dq):
     dlugosc = len(dq)
-    zliczone = [0]*dlugosc
-    output = [None]*dlugosc
+    output = [0]*(dlugosc)
+    zliczone = [0]*(dlugosc+1)
     for i in range(dlugosc):
         zliczone[dq[i]] += 1
-    for i in range(dlugosc-1, -1, -1):
-        output[zliczone[dq[i]] - 1] = dq[i]
+    for i in range(dlugosc):
+        zliczone[i] += zliczone[i-1]
+    i = dlugosc-1
+    while(i >= 0):
+        output[zliczone[dq[i]]] = dq[i]
         zliczone[dq[i]] -= 1
-    dq = output
+        i -= 1
+        dq = output
     return dq
 
 def select(dq):
@@ -86,15 +90,23 @@ def insertion(dq):
     return dq
 
 def podzial(dq, p, r, pivot):
-    piwot = dq[pivot]
-    i = p-1
+    dq[r],dq[pivot]=dq[pivot],dq[r]
+    piwot = dq[r]
+    i = p
     j = r
-    for j in range(p,r):
-        if(dq[j] <= piwot):
+    while True:
+        while ((dq[i] <= piwot) and (i<j)):
             i += 1
-            dq[i], dq[j] = dq[j], dq[i]
-    dq[i+1], dq[r] = dq[r], dq[i+1]
-    return i+1
+        while((dq[j-1] > piwot) and (j>i+1)):
+            dq[j]=dq[j-1]
+            j -= 1
+        if(i < j):
+            dq[i], dq[j] = dq[j-1], dq[i]
+            i += 1
+            j -= 1
+        else:
+            dq[j]=piwot
+            return j
 
 def quick_skrajny(dq, p, r):
     if(p < r):
@@ -105,7 +117,7 @@ def quick_skrajny(dq, p, r):
 
 def quick_srodkowy(dq, p, r):
     if(p < r):
-        q = podzial(dq, p, r, int((p+r)/2))
+        q = podzial(dq, p, r, (p+r)//2)
         quick_srodkowy(dq, p, q-1)
         quick_srodkowy(dq, q+1, r)
     return dq
@@ -124,53 +136,61 @@ for element in wlaczniki:
 
 for i in range(10):
 	wielkosc += 500
-	lista = [None]*wielkosc
-	wyniki['wielkosci'].append(len(lista))
-	for j in range(len(lista))::
-		lista[j] = random.randint(0, len(lista))
+	lista_original = [None]*wielkosc
+	wyniki['wielkosci'].append(len(lista_original))
+	for j in range(len(lista_original))::
+		lista_original[j] = random.randint(0, len(lista_original))
 	#lista = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 	if(wlaczniki['bubble']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		bubble(lista)
 		time.sleep(0.5)
 		czas = time.time() - start_time - 0.5
 		wyniki['bubble'].append(czas)
 	if(wlaczniki['heap']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		heap(lista)
 		time.sleep(0.5)
 		czas = time.time() - start_time - 0.5
 		wyniki['heap'].append(czas)
 	if(wlaczniki['merge']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		merge(lista)
 		time.sleep(0.5)
 		czas = time.time() - start_time - 0.5
 		wyniki['merge'].append(czas)
 	if(wlaczniki['count']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		count(lista)
 		time.sleep(0.5)
 		czas = time.time() - start_time - 0.5
 		wyniki['count'].append(czas)
 	if(wlaczniki['select']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		select(lista)
 		czas = time.time() - start_time - 0.5
 		wyniki['select'].append(czas)
 	if(wlaczniki['insertion']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		insertion(lista)
 		time.sleep(0.5)
 		czas = time.time() - start_time - 0.5
 		wyniki['insertion'].append(czas)
 	if(wlaczniki['quick_skrajny']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		quick_skrajny(lista)
 		time.sleep(0.5)
 		czas = time.time() - start_time - 0.5
 		wyniki['quick_skrajny'].append(czas)
 	if(wlaczniki['quick_srodkowy']):
+        lista = lista_original.copy()
 		start_time = time.time()
 		quick_srodkowy(lista)
 		time.sleep(0.5)
