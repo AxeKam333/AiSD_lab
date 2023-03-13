@@ -177,13 +177,12 @@ for element in wlaczniki:
 #for i in range(10):
 for i in range(1):
     wielkosc += 500
-    # lista_original = [None]*wielkosc
-    #
-    # wyniki['wielkosci'].append(len(lista_original))
-    # for j in range(len(lista_original)):
-    #     lista_original[j] = random.randint(0, wielkosc)
-    lista_original=[4,4,3,1,2]
-    print(lista_original)
+    lista_original = [None]*wielkosc
+    wyniki['wielkosci'].append(len(lista_original))
+    for j in range(len(lista_original)):
+        lista_original[j] = random.randint(0, wielkosc)
+    #lista_original=[4,4,3,1,2]
+    #print(lista_original)
     if (wlaczniki['bubble']):
         lista=lista_original.copy()
         start_time = time.time()
