@@ -57,8 +57,8 @@ def merge(x):
 
 def count(dq):
     dlugosc = len(dq)
-    output = [0]*(dlugosc+1)
-    zliczone = [0]*(dlugosc+1)
+    output = [0]*(dlugosc+2)
+    zliczone = [0]*(dlugosc+2)
     for i in range(dlugosc):
         zliczone[dq[i]] += 1
     for i in range(len(zliczone)):
