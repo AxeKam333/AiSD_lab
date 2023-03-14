@@ -65,6 +65,15 @@ def count(dq):
         zliczone[i] += zliczone[i-1]
     i = dlugosc-1
     while(i>=0):
+
+        # print(zliczone[dq[i]] -1)
+        # 1000
+        #
+        # Traceback (most recent call last):
+        # File "1-sort/sorting_algorithms.py", line 71, in count
+        #     output[zliczone[dq[i]] -1] = dq[i]
+        # IndexError: list assignment index out of range
+
         output[zliczone[dq[i]] -1] = dq[i]
         zliczone[dq[i]] -= 1
         i -= 1
@@ -247,6 +256,7 @@ for i in range(1):
         time.sleep(0.5)
         czas = time.time() - start_time - 0.5
         wyniki['quick_losowy'].append(czas)
+        # da sie to zrobic jedna procedura ktora jako argument przyjmuje funkcje sortujace 
 for element in wyniki:
     wypis = element
     for i in range(len(wyniki[element])):
