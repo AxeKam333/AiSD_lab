@@ -5,7 +5,7 @@ sys.setrecursionlimit(6000)
 
 wynikowy = open("wyniki.txt", "w")
 wielkosc = 500
-n = 1000
+n = 0
 
 # cale sterowanie odbywa sie za pomoca slownika 'wlaczniki' ponizej funkcji sortujacych
 
@@ -69,8 +69,7 @@ wyniki = {'wielkosci': []}
 
 for element in wlaczniki:
     if (wlaczniki[element]):
-        wyniki[str(element)+'1000'] = []
-        wyniki[str(element)+'10000000'] = []
+        wyniki[str(element)] = []
 
 
 def licz_czas(lista,fun_sortuj):
@@ -79,24 +78,22 @@ def licz_czas(lista,fun_sortuj):
     time.sleep(0.5)
     return lista,time.time() - start_time - 0.5
 
-
-for i in range(2):
-    wielkosc=500
-    for j in range(10):
-        wielkosc+=500
-        lista_ = [None]*wielkosc
-        wyniki['wielkosci'].append(str(wielkosc))
-        for j in range(len(lista_)):
-            lista_[j] = random.randint(1, n)
-        if (wlaczniki['count']):
-            sortd,czas=licz_czas(lista_,count)
-            print("CS",sortd)
-            wyniki['count'+str(n)].append(czas)
-        if (wlaczniki['quick_srodkowy']):
-            sortd,czas=licz_czas(lista_,quick_srodkowy)
-            print("QSŚ",sortd)
-            wyniki['quick_srodkowy'+str(n)].append(czas)
-    n*=10000
+for j in range(10):
+    wielkosc+=500
+    # n=int(wielkosc/100)
+    n=wielkosc*100
+    lista_ = [None]*wielkosc
+    wyniki['wielkosci'].append(str(wielkosc))
+    for j in range(len(lista_)):
+        lista_[j] = random.randint(1, n)
+    if (wlaczniki['count']):
+        sortd,czas=licz_czas(lista_,count)
+        print("CS",sortd)
+        wyniki['count'].append(czas)
+    if (wlaczniki['quick_srodkowy']):
+        sortd,czas=licz_czas(lista_,quick_srodkowy)
+        print("QSŚ",sortd)
+        wyniki['quick_srodkowy'].append(czas)
 
 for element in wyniki:
     wypis = element
