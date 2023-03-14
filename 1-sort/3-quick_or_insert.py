@@ -66,7 +66,8 @@ wyniki = {'wielkosci': []}
 
 for element in wlaczniki:
     if (wlaczniki[element]):
-        wyniki[element] = []
+        wyniki[str(element)+'notsorted'] = []
+        wyniki[str(element)+'presorted'] = []
 
 
 def licz_czas(lista,fun_sortuj):
@@ -75,28 +76,36 @@ def licz_czas(lista,fun_sortuj):
     time.sleep(0.5)
     return lista,time.time() - start_time - 0.5
 
-for i in range(10):
-# for i in range(1):
-    wielkosc += 500
-    lista_ = [None]*wielkosc
-    wyniki['wielkosci'].append(len(lista_))
-    for j in range(len(lista_)):
-        lista_[j] = random.randint(1, wielkosc)
-    if (wlaczniki['insertion']):
-        sortd,czas=licz_czas(lista_,insertion)
-        print("IS",sortd)
-        wyniki['insertion'].append(czas)
-    if (wlaczniki['quick_skrajny']):
-        sortd,czas=licz_czas(lista_,quick_skrajny)
-        print("QSS",sortd)
-        wyniki['quick_skrajny'].append(czas)
-    if (wlaczniki['quick_srodkowy']):
-        sortd,czas=licz_czas(lista_,quick_srodkowy)
-        print("QSŚ",sortd)
-        wyniki['quick_srodkowy'].append(czas)
-for element in wyniki:
-    wypis = element
-    for i in range(len(wyniki[element])):
-        wypis += '\t' + str(wyniki[element][i])
-    wypis += '\n'
-    wynikowy.write(wypis)
+presorted = 'notsorted'
+for j in range(2):
+    wielkosc=500
+    for i in range(10):
+    # for i in range(1):
+        wielkosc += 500
+        lista_ = [None]*wielkosc
+        wyniki['wielkosci'].append(len(lista_))
+        for j in range(len(lista_)):
+            lista_[j] = random.randint(1, wielkosc)
+            
+        if presorted=='presorted':
+            lista_=quick_srodkowy(lista_,0,len(lista_)-1)
+
+        if (wlaczniki['insertion']):
+            sortd,czas=licz_czas(lista_,insertion)
+            print("IS",sortd)
+            wyniki['insertion'+presorted].append(czas)
+        if (wlaczniki['quick_skrajny']):
+            sortd,czas=licz_czas(lista_,quick_skrajny)
+            print("QSS",sortd)
+            wyniki['quick_skrajny'+presorted].append(czas)
+        if (wlaczniki['quick_srodkowy']):
+            sortd,czas=licz_czas(lista_,quick_srodkowy)
+            print("QSŚ",sortd)
+            wyniki['quick_srodkowy'+presorted].append(czas)
+    for element in wyniki:
+        wypis = element
+        for i in range(len(wyniki[element])):
+            wypis += '\t' + str(wyniki[element][i])
+        wypis += '\n'
+        wynikowy.write(wypis)
+    presorted = 'presorted'
