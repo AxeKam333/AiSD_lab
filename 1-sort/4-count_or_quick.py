@@ -3,32 +3,28 @@ import time
 import sys
 sys.setrecursionlimit(6000)
 
+wynikowy = open("wyniki.txt", "w")
+wielkosc = 500
+n = 1000
+
 # cale sterowanie odbywa sie za pomoca slownika 'wlaczniki' ponizej funkcji sortujacych
 
 def count(dq,a,b):
     dlugosc = len(dq)
+    wysokosc = n
     output = [0]*(dlugosc+2)
-    zliczone = [0]*(dlugosc+2)
+    zliczone = [0]*(wysokosc+2) #np od 0 do 10: tablica 11 elem
     for i in range(dlugosc):
         zliczone[dq[i]] += 1
     for i in range(len(zliczone)):
         zliczone[i] += zliczone[i-1]
     i = dlugosc-1
     while(i>=0):
-
-        # print(zliczone[dq[i]] -1)
-        # 1000
-        #
-        # Traceback (most recent call last):
-        # File "1-sort/sorting_algorithms.py", line 71, in count
-        #     output[zliczone[dq[i]] -1] = dq[i]
-        # IndexError: list assignment index out of range
-
         output[zliczone[dq[i]] -1] = dq[i]
         zliczone[dq[i]] -= 1
         i -= 1
     for i in range(dlugosc):
-        dq[i] = output[i+1]
+        dq[i] = output[i]
     return dq
 
 
@@ -65,16 +61,16 @@ def quick_srodkowy(dq, p, r):
 
 
 # nazwa pliku wynikowego moze byc dowolna, ale musi zostac zmieniona rowniez w ostatniej petli
-wynikowy = open("wyniki.txt", "w")
-wielkosc = 500
 
-# tablica wlaczniki sluzy do sterowania tym, ktore algorytmy sortowania zostana wykonane razem z pomiarem czasu, a ktore wcale
+
+# tablica wlaczniki sluzy dpo sterowania tym, ktore algorytmy sortowania zostana wykonane razem z pomiarem czasu, a ktore wcale
 wlaczniki = {'count': True, 'quick_srodkowy': True}
 wyniki = {'wielkosci': []}
 
 for element in wlaczniki:
     if (wlaczniki[element]):
-        wyniki[element] = []
+        wyniki[str(element)+'1000'] = []
+        wyniki[str(element)+'10000000'] = []
 
 
 def licz_czas(lista,fun_sortuj):
@@ -85,21 +81,23 @@ def licz_czas(lista,fun_sortuj):
 
 
 for i in range(2):
-    wielkosc += 500
-    lista_original = [None]*wielkosc
-    wyniki['wielkosci'].append(len(lista_original))
-    for j in range(len(lista_original)):
-        lista_original[j] = random.randint(1, wielkosc)
-    #lista_original=[4,4,3,1,2]
-    #print(lista_original)
-    if (wlaczniki['count']):
-        sortd,czas=licz_czas(lista_original,count)
-        print("QSŚ",sortd)
-        wyniki['quick_srodkowy'].append(czas)
-    if (wlaczniki['quick_srodkowy']):
-        sortd,czas=licz_czas(lista_original,quick_srodkowy)
-        print("QSŚ",sortd)
-        wyniki['quick_srodkowy'].append(czas)
+    wielkosc=500
+    for j in range(10):
+        wielkosc+=500
+        lista_ = [None]*wielkosc
+        wyniki['wielkosci'].append(str(wielkosc))
+        for j in range(len(lista_)):
+            lista_[j] = random.randint(1, n)
+        if (wlaczniki['count']):
+            sortd,czas=licz_czas(lista_,count)
+            print("CS",sortd)
+            wyniki['count'+str(n)].append(czas)
+        if (wlaczniki['quick_srodkowy']):
+            sortd,czas=licz_czas(lista_,quick_srodkowy)
+            print("QSŚ",sortd)
+            wyniki['quick_srodkowy'+str(n)].append(czas)
+    n*=10000
+
 for element in wyniki:
     wypis = element
     for i in range(len(wyniki[element])):
