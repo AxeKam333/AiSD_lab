@@ -57,7 +57,7 @@ def merge(x):
 
 def count(dq):
     dlugosc = len(dq)
-    output = [0]*(dlugosc)
+    output = [0]*(dlugosc+1)
     zliczone = [0]*(dlugosc+1)
     for i in range(dlugosc):
         zliczone[dq[i]] += 1
@@ -77,7 +77,8 @@ def count(dq):
         output[zliczone[dq[i]] -1] = dq[i]
         zliczone[dq[i]] -= 1
         i -= 1
-    dq = output
+    for i in range(dlugosc):
+        dq[i] = output[i+1]
     return dq
 
 
@@ -189,7 +190,7 @@ for i in range(1):
     lista_original = [None]*wielkosc
     wyniki['wielkosci'].append(len(lista_original))
     for j in range(len(lista_original)):
-        lista_original[j] = random.randint(0, wielkosc)
+        lista_original[j] = random.randint(1, wielkosc)
     #lista_original=[4,4,3,1,2]
     #print(lista_original)
     if (wlaczniki['bubble']):
