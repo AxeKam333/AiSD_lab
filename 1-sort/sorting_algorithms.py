@@ -6,6 +6,8 @@ sys.setrecursionlimit(6000)
 
 # cale sterowanie odbywa sie za pomoca slownika 'wlaczniki' ponizej funkcji sortujacych
 
+#xdddddddddd
+
 def bubble(dq):
     sortd = False
     while True:
