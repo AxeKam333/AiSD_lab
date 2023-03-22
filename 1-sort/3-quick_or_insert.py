@@ -56,7 +56,7 @@ def quick_srodkowy(dq, p, r):
     return dq
 
 # nazwa pliku wynikowego moze byc dowolna, ale musi zostac zmieniona rowniez w ostatniej petli
-file_name="zad2.txt"
+file_name="zad3.txt"
 wynikowy = open(file_name, "w")
 wielkosc = 500
 

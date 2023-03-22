@@ -3,7 +3,7 @@ import time
 import sys
 sys.setrecursionlimit(6000)
 
-wynikowy = open("wyniki.txt", "w")
+wynikowy = open("zad4.txt", "w")
 wielkosc = 500
 n = 0
 
