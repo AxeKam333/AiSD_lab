@@ -259,7 +259,6 @@ for i in range(1):
         time.sleep(0.5)
         czas = time.time() - start_time - 0.5
         wyniki['quick_losowy'].append(czas)
-        # da sie to zrobic jedna procedura ktora jako argument przyjmuje funkcje sortujace 
 for element in wyniki:
     wypis = element
     for i in range(len(wyniki[element])):
