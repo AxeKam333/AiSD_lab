@@ -2,21 +2,26 @@ from array import array
 import time
 import random
 
-def quicksort(arr):
-    if len(arr) <= 1:
-        return arr
+def quicksort(arr, start=0, end=None):
+    if end is None:
+        end = len(arr) - 1
 
-    pivot = arr[len(arr) // 2]
-    left = array('i')
-    right = array('i')
+    if start < end:
+        pivot_index = partition(arr, start, end)
+        quicksort(arr, start, pivot_index - 1)
+        quicksort(arr, pivot_index + 1, end)
 
-    for item in arr:
-        if item <= pivot:
-            left.append(item)
-        else:
-            right.append(item)
+def partition(arr, start, end):
+    pivot_value = arr[end]
+    i = start - 1
 
-    return quicksort(left) + pivot + quicksort(right)
+    for j in range(start, end):
+        if arr[j] <= pivot_value:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[end] = arr[end], arr[i + 1]
+    return i + 1
 
 n=0
 for i in range(10):
@@ -29,11 +34,10 @@ for i in range(10):
             if x not in tab:
                 tab.append(x)
                 break
-    print(tab)
 
     # CB
     start = time.time()
-
-    # create copy of array tab
     tab_copy = array('i', tab)
-
+    quicksort(tab_copy)
+    time.sleep(0.2)
+    CB = time.time() - start - 0.2
