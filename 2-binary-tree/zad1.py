@@ -23,7 +23,7 @@ def partition(arr, start, end):
     arr[i + 1], arr[end] = arr[end], arr[i + 1]
     return i + 1
 
-def linear_find(arr, value):
+def linear_search(arr, value):
     for i in range(len(arr)):
         if arr[i] == value:
             return i
@@ -44,6 +44,13 @@ def binary_search(arr, value):
 
     return -1
 
+def time_of_search(arr, tab, search_function):
+    start = time.time()
+    for value in tab:
+        search_function(arr, value)
+    time.sleep(0.2)
+    return time.time() - start - 0.2
+
 n=0
 for i in range(10):
     tab = array('i')
@@ -55,6 +62,7 @@ for i in range(10):
             if x not in tab:
                 tab.append(x)
                 break
+
     #kolejne wartości tablicy tab mają być znajdowane w jej posortowanych kopiach 
 
     # CB
@@ -65,15 +73,7 @@ for i in range(10):
     CB = time.time() - start - 0.2
 
     #SA
-    start = time.time()
-    for i in tab:
-        idx = linear_find(tab, i)
-    time.sleep(0.2)
-    SA = time.time() - start - 0.2
+    SA = time_of_search(tab_copy, tab, linear_search)
 
     #SB
-    start = time.time()
-    for i in tab:
-        idx = binary_search(tab, i)
-    time.sleep(0.2)
-    SB = time.time() - start - 0.2
+    SB = time_of_search(tab_copy, tab, binary_search)
