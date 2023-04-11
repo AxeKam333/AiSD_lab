@@ -1,4 +1,5 @@
-
+import random
+import time
 
 class Etykiety:
     def __init__(self, liczba_wierzcholkow):
@@ -32,6 +33,17 @@ class Graf_MacierzSasiedztwa:
     def __init__(self, macierz=[]):
         self.macierz = macierz
 
+    def generuj_losowo(self, liczba_wierzcholkow, gestosc):
+        for i in range(liczba_wierzcholkow):
+            self.macierz.append([])
+            for j in range(liczba_wierzcholkow):
+                los = random.randint(0, 100)/100
+                if los <= gestosc:
+                    self.macierz[i].append(1)
+                else:
+                    self.macierz[i].append(0)
+            self.macierz[i][i] = 0
+
     def bez_lukow_wchodzacych(self):
         a = len(self.macierz)
         dq = []
@@ -45,14 +57,16 @@ class Graf_MacierzSasiedztwa:
                 dq.append(idx_sasiada)
         return dq
     
-    def czy_cykliczny(self, etykiety: Etykiety):
+    def liczba_lukow_pow(self, etykiety: Etykiety):
         a = len(self.macierz)
+        licz = 0
+        print(self.macierz)
         for wierzcholek_idx in range(a):
             for sasiad_idx in range(a):
                 if self.macierz[wierzcholek_idx][sasiad_idx] == 1 \
                 and etykiety.podstaw_pod_wzor(wierzcholek_idx, sasiad_idx):
-                    return True
-        return False
+                    licz += 1
+        return licz
 
 
 class Graf_ListaNastepnikow:
@@ -115,15 +129,16 @@ class Graf_ListaNastepnikow:
             if not(self.ety.czy_odwiedzony(i)):
                 self.topological_sort_util(i, stos)
         stos.reverse()
-        print("kolejność topologiczna: ", stos)
+        # print("kolejność topologiczna: ", stos)
         return self.ety
 
-    def czy_cykliczny(self, etykiety: Etykiety):
+    def liczba_lukow_pow(self, etykiety: Etykiety):
+        licz = 0
         for wierzcholek_idx in range(len(self.lista)):
             for sasiad in self.lista[wierzcholek_idx]:
                 if etykiety.podstaw_pod_wzor(wierzcholek_idx, sasiad):
-                    return True
-        return False
+                    licz += 1
+        return licz
             
 
 class Graf_ListaLukow:
@@ -136,39 +151,66 @@ class Graf_ListaLukow:
         for wierzcholek_idx in range(len(listanastepnikow)):
             for luk in listanastepnikow[wierzcholek_idx]:
                 self.lista.append((wierzcholek_idx, luk))
-        print(self.lista)
 
-    def czy_cykliczny(self, etykiety: Etykiety, lista = []):
-        if lista != []:
-            self.__init__(lista)
+    def liczba_lukow_pow(self, etykiety: Etykiety, lista = []):
+        licz = 0
 
         for i in self.lista:
             if etykiety.podstaw_pod_wzor(i[0],i[1]):
-                return True
-        return False
+                licz += 1
+        return licz
 
-
+def czas_wykonania(funkcja, *args):
+    start = time.time()
+    wynik = funkcja(*args)
+    time.sleep(0.2)
+    end = time.time()
+    return wynik, end - start - 0.2
 
 if __name__=="__main__":
-    
-    m = Graf_MacierzSasiedztwa([
-    [0, 1, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ])
-    n = Graf_ListaNastepnikow()
-    n.from_macierzsasiedztwa(m.macierz)
-    print(n)
-    etykiety = n.topological_sort(m.bez_lukow_wchodzacych())
-    print(etykiety)
-    l = Graf_ListaLukow(n.lista)
-    l.from_listanastepnikow(n.lista)
-    print(m.czy_cykliczny(etykiety))
-    print(n.czy_cykliczny(etykiety))
-    print(l.czy_cykliczny(etykiety))
+    # m = Graf_MacierzSasiedztwa([
+    # ])
+    # n = Graf_ListaNastepnikow()
+    # n.from_macierzsasiedztwa(m.macierz)
+    # print(n)
+    # etykiety = n.topological_sort(m.bez_lukow_wchodzacych())
+    # print(etykiety)
+    # l = Graf_ListaLukow(n.lista)
+    # l.from_listanastepnikow(n.lista)
+    # print(m.liczba_lukow_pow(etykiety))
+    # print(n.liczba_lukow_pow(etykiety))
+    # print(l.liczba_lukow_pow(etykiety))
+    d = [0.2, 0.4]
+
+    for gestosc in d:
+        n = 0
+        print("Gestosc: " + str(gestosc))
+        for i in range(10):
+            n+=200
+            print("Dla n = " + str(n))
+
+            graf_macierz = Graf_MacierzSasiedztwa()
+
+            czas_gen = czas_wykonania(graf_macierz.generuj_losowo, n, gestosc)[1]
+            print("Czas generowania grafu (s): " + str(czas_gen))
+
+            graf_nast = Graf_ListaNastepnikow()
+            graf_nast.from_macierzsasiedztwa(graf_macierz.macierz)
+
+            graf_luk = Graf_ListaLukow()
+            graf_luk.from_listanastepnikow(graf_nast.lista)
+
+            # czy tutaj też liczyć czas generowania punktów startowych?
+            punkty_startowe = graf_macierz.bez_lukow_wchodzacych()
+            etykiety, czas_ety = czas_wykonania(graf_nast.topological_sort, punkty_startowe)
+            print("Czas zliczania etykiet (s): " + str(czas_ety))
+
+            powroty, czas_pow_nast = czas_wykonania(graf_nast.liczba_lukow_pow, etykiety)
+            print("Liczba lukow powrotnych: " + str(powroty))
+            print("Czas zliczania lukow powrotnych (lista_nastepnikow): " + str(czas_pow_nast))
+
+            powroty, czas_pow_luk = czas_wykonania(graf_luk.liczba_lukow_pow, etykiety)
+            print("Czas zliczania lukow powrotnych (lista_lukow): " + str(czas_pow_luk))
+
+            powroty, czas_pow_mac = czas_wykonania(graf_macierz.liczba_lukow_pow, etykiety)
+            print("Czas zliczania lukow powrotnych (macierz sasiedztwa)): " + str(czas_pow_mac))
