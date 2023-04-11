@@ -34,6 +34,7 @@ class Graf_MacierzSasiedztwa:
         self.macierz = macierz
 
     def generuj_losowo(self, liczba_wierzcholkow, gestosc):
+        self.macierz = []
         for i in range(liczba_wierzcholkow):
             self.macierz.append([])
             for j in range(liczba_wierzcholkow):
@@ -60,7 +61,7 @@ class Graf_MacierzSasiedztwa:
     def liczba_lukow_pow(self, etykiety: Etykiety):
         a = len(self.macierz)
         licz = 0
-        print(self.macierz)
+        # print(self.macierz)
         for wierzcholek_idx in range(a):
             for sasiad_idx in range(a):
                 if self.macierz[wierzcholek_idx][sasiad_idx] == 1 \
