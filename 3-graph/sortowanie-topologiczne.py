@@ -40,12 +40,11 @@ class Graf_MacierzSasiedztwa:
             self.macierz.append([])
             for j in range(liczba_wierzcholkow):
                 los = random.randint(0, 100)/100
-                if los <= gestosc:
+                if los <= gestosc and i != j:
                     self.macierz[i].append(1)
                     liczba_lukow += 1
                 else:
                     self.macierz[i].append(0)
-            self.macierz[i][i] = 0
         print("Maksymalna liczba lukow:" + str(liczba_wierzcholkow*(liczba_wierzcholkow-1)))
         print("Liczba lukow: " + str(liczba_lukow))
 
@@ -143,8 +142,7 @@ class Graf_ListaNastepnikow:
         liczba_lukow = 0
         for wierzcholek_idx in range(len(self.lista)):
             for sasiad in self.lista[wierzcholek_idx]:
-                if wierzcholek_idx != sasiad:
-                    liczba_lukow += 1
+                liczba_lukow += 1
                 if etykiety.podstaw_pod_wzor(wierzcholek_idx, sasiad):
                     licz += 1
         print("Liczba lukow: " + str(liczba_lukow))
