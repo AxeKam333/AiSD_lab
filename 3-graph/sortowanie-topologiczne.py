@@ -35,15 +35,19 @@ class Graf_MacierzSasiedztwa:
 
     def generuj_losowo(self, liczba_wierzcholkow, gestosc):
         self.macierz = []
+        liczba_lukow = 0
         for i in range(liczba_wierzcholkow):
             self.macierz.append([])
             for j in range(liczba_wierzcholkow):
                 los = random.randint(0, 100)/100
                 if los <= gestosc:
                     self.macierz[i].append(1)
+                    liczba_lukow += 1
                 else:
                     self.macierz[i].append(0)
             self.macierz[i][i] = 0
+        print("Maksymalna liczba lukow:" + str(liczba_wierzcholkow*(liczba_wierzcholkow-1)))
+        print("Liczba lukow: " + str(liczba_lukow))
 
     def bez_lukow_wchodzacych(self):
         a = len(self.macierz)
@@ -79,6 +83,7 @@ class Graf_ListaNastepnikow:
         return str(self.lista)
     
     def from_macierzsasiedztwa(self, maciez_sasiedztwa):
+        self.lista = []
         for wierzcholek_id in range(len(maciez_sasiedztwa)):
             self.lista.append([])
             for luk_id in range(len(maciez_sasiedztwa[wierzcholek_id])):
@@ -135,10 +140,14 @@ class Graf_ListaNastepnikow:
 
     def liczba_lukow_pow(self, etykiety: Etykiety):
         licz = 0
+        liczba_lukow = 0
         for wierzcholek_idx in range(len(self.lista)):
             for sasiad in self.lista[wierzcholek_idx]:
+                if wierzcholek_idx != sasiad:
+                    liczba_lukow += 1
                 if etykiety.podstaw_pod_wzor(wierzcholek_idx, sasiad):
                     licz += 1
+        print("Liczba lukow: " + str(liczba_lukow))
         return licz
             
 
