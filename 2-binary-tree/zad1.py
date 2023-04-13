@@ -29,6 +29,7 @@ def linear_search(arr, value):
         if arr[i] == value:
             return i
 
+
 def binary_search(arr, value):
     left = 0
     right = len(arr) - 1
@@ -73,12 +74,14 @@ for i in range(10):
 
     # CB
     start = time.time()
+
     B = array('i', A)
     quicksort(B)
     time.sleep(0.2)
     CB = time.time() - start - 0.2
 
     #SA
+
     SA = search_time(A, B, linear_search)
 
     #SB
