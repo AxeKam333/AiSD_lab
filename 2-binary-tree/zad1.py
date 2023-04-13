@@ -1,4 +1,5 @@
 from array import array
+import binary_search_tree as BST
 import time
 import random
 
@@ -44,36 +45,62 @@ def binary_search(arr, value):
 
     return -1
 
-def time_of_search(arr, tab, search_function):
+def search_time(searched, values, search_function):
     start = time.time()
-    for value in tab:
-        search_function(arr, value)
+    for value in values:
+        search_function(searched, value)
     time.sleep(0.2)
     return time.time() - start - 0.2
 
-n=0
+def search_in_tree_time(tree, values):
+    start = time.time()
+    for value in values:
+        tree.find(value)
+    time.sleep(0.2)
+    return time.time() - start - 0.2
+
+n=500
 for i in range(10):
-    tab = array('i')
-    n+=50
+    A = array('i')
+    n+=500
     for j in range(n):
-        #elements cannot repeat
         while True:
             x = random.randint(0, 1000)
-            if x not in tab:
-                tab.append(x)
+            if x not in A:
+                A.append(x)
                 break
 
     #kolejne wartości tablicy tab mają być znajdowane w jej posortowanych kopiach 
 
     # CB
     start = time.time()
-    tab_copy = array('i', tab)
-    quicksort(tab_copy)
+
+    B = array('i', A)
+    quicksort(B)
     time.sleep(0.2)
     CB = time.time() - start - 0.2
 
     #SA
-    SA = time_of_search(tab_copy, tab, linear_search)
+
+    SA = search_time(A, B, linear_search)
 
     #SB
-    SB = time_of_search(tab_copy, tab, binary_search)
+    SB = search_time(B, A, binary_search)
+
+    #CTA
+    start = time.time()
+    TA = BST.Node(A[0])
+    for i in A:
+        TA.insert(i)
+
+    time.sleep(0.2)
+    CTA = time.time() - start - 0.2
+
+    #hTA
+    hTA = TA.height()
+
+    #STA
+    STA = search_in_tree_time(TA, A)
+    
+    #tablica pomocnicza
+    help = array('i')
