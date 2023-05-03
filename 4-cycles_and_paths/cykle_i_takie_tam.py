@@ -117,20 +117,51 @@ def czy_hamilton(graf, cykl, one_enough):
                         return
                     cykl.pop(-1)
 
+def DFSEuler(graf, v, wynik):
+    for u in range(len(graf[v])):
+        if graf[v][u] == 1:
+            print(f"rozpatruje krawedz {v} {u}")
+            graf[v][u] = 0
+            graf[u][v] = 0
+            graf, wynik = DFSEuler(graf, u, wynik)
+            wynik.append(u)
+    return graf, wynik
+
+
+def czy_euler(graf):
+    n = len(graf)
+    for i in range(n):
+        suma_krawędzi_wychodzących = 0
+        for j in range(n):
+            if graf[i][j] == 1:
+                suma_krawędzi_wychodzących += 1
+        if suma_krawędzi_wychodzących % 2 != 0:
+            return None
+    graf, wynik = DFSEuler(graf, 0, [])
+    wynik.append(0)
+    return graf, wynik
+
 ilosc = 14
 gestosci = [0.2,0.6]
 
-#macierz = [[0, 1, 0, 1, 0],[1, 0, 1, 1, 1],[0, 1, 0, 0, 1,],[1, 1, 0, 0, 1],[0, 1, 1, 1, 0]]
+# macierz = [[0, 1, 0, 1, 0],[1, 0, 1, 1, 1],[0, 1, 0, 0, 1,],[1, 1, 0, 0, 1],[0, 1, 1, 1, 0]]
 
-macierz = generator_macierzy(ilosc, 1)
-zrob_wyspy(macierz)
+# macierz = generator_macierzy(ilosc, 1)
+# zrob_wyspy(macierz)
+
+macierz = [[0, 1, 0, 0, 1],[1, 0, 1, 1, 1],[0, 1, 0, 0, 1,],[0, 1, 0, 0, 1],[1, 1, 1, 1, 0]]
+
+
 print("\n".join([str(x) for x in macierz]))
-czas=czas_wykonania(czy_hamilton, macierz, [0], False)
-print(f"alamakota {len(cykle)} {cykle}")
-print(czas)
+# czas=czas_wykonania(czy_hamilton, macierz, [0], False)
+# print(f"ilosc cykli: {len(cykle)} cykle: {cykle}")
+# print(czas)
 
-for gestosc in gestosci:
-    macierz = generator_macierzy(ilosc, gestosc)
-    # for i in range(ilosc):
-    #     print(macierz[i])
-    uzytkowa = macierz.copy()
+# for gestosc in gestosci:
+#     macierz = generator_macierzy(ilosc, gestosc)
+#     # for i in range(ilosc):
+#     #     print(macierz[i])
+#     uzytkowa = macierz.copy()
+
+czas2 = czas_wykonania(czy_euler, macierz)
+print(czas2)
