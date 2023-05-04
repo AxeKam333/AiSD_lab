@@ -7,21 +7,33 @@ import copy
 def generator_macierzy(liczba, gestosc):
     generowana = [[0]*liczba for x in range(liczba)]
     y = gestosc
-    licznik = 0
+    krawedzi = ((liczba*(liczba-1))*gestosc)//2
     for i in range(liczba):
-        #generowana[i] = [0]*liczba
         for j in range(liczba):
-            if(i!=j and generowana[i][j] == 0):
-                losowo = random.randint(0, 100)/100
-                if(losowo <= y):
-                    generowana[i][j] = int(1.0)
-                    generowana[j][i] = 1
-                    licznik += 1
+            if(i == j):
+                continue
+            losowo = random.randint(0,100)/100
+            if(losowo < gestosc and generowana[i][j] == 0):
+                generowana[i][j] = 1
+                generowana[j][i] = 1
     # for i in range(liczba):
-    #     for j in range(liczba):
-    #         if(generowana[i][j] == 1):
-    #             generowana[j][i] = 1
-    print(licznik)
+    #     print(generowana[i])
+    #print(generowana)
+    nieparzyste = []
+    for i in range(liczba):
+        licznik = 0
+        for j in range(liczba):
+            licznik += generowana[i][j]
+        if((licznik%2) != 0):
+            nieparzyste.append(i)
+    #print(f"nieparzyste: {nieparzyste}")
+    for i in range(0,len(nieparzyste),2):
+        if(generowana[nieparzyste[i]][nieparzyste[i+1]] == 1):
+            generowana[nieparzyste[i]][nieparzyste[i+1]] = 0
+            generowana[nieparzyste[i+1]][nieparzyste[i]] = 0
+        elif(generowana[nieparzyste[i]][nieparzyste[i+1]] == 0):
+            generowana[nieparzyste[i]][nieparzyste[i+1]] = 1
+            generowana[nieparzyste[i+1]][nieparzyste[i]] = 1
     return generowana
 
 def zrob_wyspy(graf):
@@ -97,6 +109,7 @@ def bound(graf, cykl):
 cykle = []
 
 def czy_hamilton(graf, cykl, one_enough):
+    print(f"hamilton {one_enough}")
     global cykle
     if(len(cykl) == 1):
         cykle = []
@@ -106,6 +119,9 @@ def czy_hamilton(graf, cykl, one_enough):
     else:
         if(bound(graf, cykl)):
         #if(True):
+            #print(f"graf: {graf}")
+            #print(f"cykl: {cykl}")
+            #print(f"one_enough: {one_enough}")
             biezacy = cykl[-1]
             for i in range(len(graf)):
                 if(graf[biezacy][i] == 0):
@@ -141,26 +157,43 @@ def czy_euler(graf):
     wynik.append(0)
     return graf, wynik
 
-ilosc = 14
 gestosci = [0.2,0.6]
-
-# macierz = [[0, 1, 0, 1, 0],[1, 0, 1, 1, 1],[0, 1, 0, 0, 1,],[1, 1, 0, 0, 1],[0, 1, 1, 1, 0]]
 
 #macierz = [[0, 1, 0, 0, 1],[1, 0, 1, 1, 1],[0, 1, 0, 0, 1,],[0, 1, 0, 0, 1],[1, 1, 1, 1, 0]]
 
-macierz = generator_macierzy(ilosc, 0.6)
-zrob_wyspy(macierz)
-print("\n".join([str(x) for x in macierz]))
-czas=czas_wykonania(czy_hamilton, macierz, [0], True)
-print(f"alamakota {len(cykle)} {cykle}")
-print(czas)
-print("\n".join([str(x) for x in macierz]))
+# macierz = generator_macierzy(ilosc, 0.6)
+# zrob_wyspy(macierz)
+# print("\n".join([str(x) for x in macierz]))
+# czas=czas_wykonania(czy_hamilton, macierz, [0], True)
+# print(f"alamakota {len(cykle)} {cykle}")
+# print(czas)
+# print("\n".join([str(x) for x in macierz]))
 
-# for gestosc in gestosci:
-#     macierz = generator_macierzy(ilosc, gestosc)
-#     # for i in range(ilosc):
-#     #     print(macierz[i])
-#     uzytkowa = macierz.copy()
+w = open("wyniki.txt", "w")
 
-czas2 = czas_wykonania(czy_euler, macierz)
-print(czas2)
+ilosc = 27
+
+wynik_ilosc = 'liczba_elementow\t'
+wynik_h1 = 'hamilton_1\t'
+wynik_ha = 'hamilton_all\t'
+wynik_eu = 'euler\t'
+wynik_liczba = 'liczba\t'
+for gestosc in gestosci:
+    #for i in range(10):
+    #ilosc += i
+    wynik_ilosc += str(ilosc)+'\t'
+    macierz = generator_macierzy(ilosc, gestosc)
+    # while(czy_euler(macierz) == False):
+    #     macierz = generator_macierzy(ilosc,gestosc)
+    pusta,czas = czas_wykonania(czy_hamilton,macierz,[0],True)
+    wynik_h1 += str(czas)+'\t'
+    #pusta,czas = czas_wykonania(czy_hamilton,macierz,[0],False)
+    #wynik_ha += str(czas)+'\t'
+    #wynik_liczba += str(len(cykle))+'\t'
+    pusta,czas = czas_wykonania(czy_euler,macierz)
+    wynik_eu += str(czas)+'\t'
+w.write(wynik_ilosc+'\n')
+w.write(wynik_h1+'\n')
+w.write(wynik_ha+'\n')
+w.write(wynik_liczba+'\n')
+w.write(wynik_eu)
