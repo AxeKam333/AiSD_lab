@@ -117,15 +117,15 @@ def czy_hamilton(graf, cykl, one_enough):
                         return
                     cykl.pop(-1)
 
-ilosc = 14
+ilosc = 36
 gestosci = [0.2,0.6]
 
 #macierz = [[0, 1, 0, 1, 0],[1, 0, 1, 1, 1],[0, 1, 0, 0, 1,],[1, 1, 0, 0, 1],[0, 1, 1, 1, 0]]
 
-macierz = generator_macierzy(ilosc, 1)
+macierz = generator_macierzy(ilosc, 0.6)
 zrob_wyspy(macierz)
 print("\n".join([str(x) for x in macierz]))
-czas=czas_wykonania(czy_hamilton, macierz, [0], False)
+czas=czas_wykonania(czy_hamilton, macierz, [0], True)
 print(f"alamakota {len(cykle)} {cykle}")
 print(czas)
 
