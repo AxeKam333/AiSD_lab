@@ -171,7 +171,7 @@ gestosci = [0.2,0.6]
 
 w = open("wyniki.txt", "w")
 
-ilosc = 27
+ilosc = 7
 
 wynik_ilosc = 'liczba_elementow\t'
 wynik_h1 = 'hamilton_1\t'
@@ -187,9 +187,9 @@ for gestosc in gestosci:
     #     macierz = generator_macierzy(ilosc,gestosc)
     pusta,czas = czas_wykonania(czy_hamilton,macierz,[0],True)
     wynik_h1 += str(czas)+'\t'
-    #pusta,czas = czas_wykonania(czy_hamilton,macierz,[0],False)
-    #wynik_ha += str(czas)+'\t'
-    #wynik_liczba += str(len(cykle))+'\t'
+    pusta,czas = czas_wykonania(czy_hamilton,macierz,[0],False)
+    wynik_ha += str(czas)+'\t'
+    wynik_liczba += str(len(cykle))+'\t'
     pusta,czas = czas_wykonania(czy_euler,macierz)
     wynik_eu += str(czas)+'\t'
 w.write(wynik_ilosc+'\n')
