@@ -25,15 +25,17 @@ def generator_macierzy(liczba, gestosc):
         for j in range(liczba):
             licznik += generowana[i][j]
         if((licznik%2) != 0):
-            nieparzyste.append(i)
+            nieparzyste.append({"numer":i, "obsluzony":0})
     #print(f"nieparzyste: {nieparzyste}")
-    for i in range(0,len(nieparzyste),2):
-        if(generowana[nieparzyste[i]][nieparzyste[i+1]] == 1):
-            generowana[nieparzyste[i]][nieparzyste[i+1]] = 0
-            generowana[nieparzyste[i+1]][nieparzyste[i]] = 0
-        elif(generowana[nieparzyste[i]][nieparzyste[i+1]] == 0):
-            generowana[nieparzyste[i]][nieparzyste[i+1]] = 1
-            generowana[nieparzyste[i+1]][nieparzyste[i]] = 1
+    istnieje = [1, 0]
+    for i in range(0,len(nieparzyste)):
+        for j in range(i+1,len(nieparzyste)):
+            if(nieparzyste[i]['obsluzony'] == nieparzyste[j]['obsluzony'] == 0):
+                if(generowana[nieparzyste[i]['numer']][nieparzyste[j]['numer']] == istnieje[i%2]):
+                    generowana[i][j] = istnieje[(i+1)%2]
+                    generowana[j][i] = istnieje[(i+1)%2]
+                    nieparzyste[i]['obsluzony'] = 1
+                    nieparzyste[j]['obsluzony'] = 1
     return generowana
 
 def zrob_wyspy(graf):
