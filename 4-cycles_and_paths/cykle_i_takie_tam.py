@@ -185,6 +185,12 @@ for gestosc in gestosci:
     #ilosc += i
     wynik_ilosc += str(ilosc)+'\t'
     macierz = generator_macierzy(ilosc, gestosc)
+    wskaznik = True
+    while(wskaznik):
+          if(bound(macierz,[0])):
+                wskaznik = False
+          else:
+                macierz = generator_macierzy(ilosc, gestosc)
     # while(czy_euler(macierz) == False):
     #     macierz = generator_macierzy(ilosc,gestosc)
     pusta,czas = czas_wykonania(czy_hamilton,macierz,[0],True)
