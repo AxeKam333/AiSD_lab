@@ -69,7 +69,8 @@ def bound(graf, cykl):
         for j in range(n):
             if(zredukowany_graf[i][j] > 0):
                 licznik += 1
-        if((licznik < 2) and (not i in cykl)
+        if((licznik < 2)
+                and (not i in cykl)
                 and ((licznik != 1) or ((graf[cykl[-1]][i] == 0) and (graf[i][cykl[0]]==0)))
                 and ((len(cykl) < n-1) or (licznik != 0) or (graf[cykl[-1]][i]==0) or (graf[i][cykl[0]] == 0))):
             #print(f"Oh no 1 {i}, {licznik}")
@@ -173,7 +174,7 @@ gestosci = [0.2,0.6]
 
 w = open("wyniki.txt", "w")
 
-ilosc = 31
+ilosc = 5
 
 wynik_ilosc = 'liczba_elementow\t'
 wynik_h1 = 'hamilton_1\t'
