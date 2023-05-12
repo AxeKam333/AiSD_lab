@@ -17,12 +17,28 @@ def crafting(x, tablica):
         tablica[i]['size'] = random.randint(10,1000)
         tablica[i]['value'] = random.randint(100,10000)
         suma += tablica[i]['size']
-    return tablica
+    return tablica, suma
+
+def heurystyki(rzeczy, pojemnosc)
 
 liczba_przedmiotow = 5
 przedmioty = []
 pojemnoscPlecaka = None
+najlepsze_rozwiazanie = 0
+kryteria=[
+    {'nazwa':'random','aktywne':True},
+    {'nazwa':'size','aktywne':True},
+    {'nazwa':'value','aktywne':True},
+    {'nazwa':'ratio','aktywne':True}]
+pojemnosci=[
+    {'wartosc':0.25,'aktywne':True},
+    {'wartosc':0.5,'aktywne':True},
+    {'wartosc':0,75,'aktywne':True}
+]
 
 for i in range(10):
     liczba_przedmiotow += i
-    przedmioty = crafting(liczba_przedmiotow, przedmioty)
+    przedmioty, pojemnoscPlecaka = crafting(liczba_przedmiotow, przedmioty)
+    for pojemnosc in pojemnosci:
+        if(pojemnosc['aktywne']):
+            pojemnosc_robocza = pojemnoscPlecaka*pojemnosc['wartosc']
