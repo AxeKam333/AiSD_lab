@@ -45,6 +45,7 @@ def binary_search(arr, value):
     return -1
 
 def search_time(searched, values, search_function):
+
     start = time.time()
     for value in values:
         search_function(searched, value)
@@ -81,15 +82,18 @@ wynik_STA = ''
 wynik_CTB = ''
 wynik_STB = ''
 wynik_hTB = ''
+
 n=500
 for i in range(10):
     A = array('i')
     n+=500
+
     print(n)
     wynik_wielkosci += str(n) + '\t'
     for j in range(n):
         while True:
             x = random.randint(1, n)
+
             if x not in A:
                 A.append(x)
                 break
@@ -103,6 +107,7 @@ for i in range(10):
     STB = 0
     hTB = 0
     #kolejne wartości tablicy tab mają być znajdowane w jej posortowanych kopiach 
+    
     for j in range(10):
         #CB
         start = time.time()
