@@ -189,9 +189,15 @@ if __name__=="__main__":
     # print(n.liczba_lukow_pow(etykiety))
     # print(l.liczba_lukow_pow(etykiety))
     d = [0.2, 0.4]
-
+    w = open('wyniki.txt', 'w')
     for gestosc in d:
         n = 0
+        wynik_etykiety = 'etykiety\t'
+        wynik_powrotne = 'powrotne\t'
+        wynik_powrotne_nast = 'powrotne_nast\t'
+        wynik_powrotne_luk = 'powrotne_luk\t'
+        wynik_powrotne_mac = 'powrotne_mac\t'
+
         print("Gestosc: " + str(gestosc))
         for i in range(10):
             n+=200
@@ -212,13 +218,23 @@ if __name__=="__main__":
             punkty_startowe = graf_macierz.bez_lukow_wchodzacych()
             etykiety, czas_ety = czas_wykonania(graf_nast.topological_sort, punkty_startowe)
             print("Czas zliczania etykiet (s): " + str(czas_ety))
+            wynik_etykiety += str(czas_ety)+'\t'
 
             powroty, czas_pow_nast = czas_wykonania(graf_nast.liczba_lukow_pow, etykiety)
             print("Liczba lukow powrotnych: " + str(powroty))
+            wynik_powrotne += str(powroty)+'\t'
             print("Czas zliczania lukow powrotnych (lista_nastepnikow): " + str(czas_pow_nast))
+            wynik_powrotne_nast += str(czas_pow_nast)+'\t'
 
             powroty, czas_pow_luk = czas_wykonania(graf_luk.liczba_lukow_pow, etykiety)
             print("Czas zliczania lukow powrotnych (lista_lukow): " + str(czas_pow_luk))
+            wynik_powrotne_luk += str(czas_pow_luk)+'\t'
 
             powroty, czas_pow_mac = czas_wykonania(graf_macierz.liczba_lukow_pow, etykiety)
             print("Czas zliczania lukow powrotnych (macierz sasiedztwa)): " + str(czas_pow_mac))
+            wynik_powrotne_mac += str(czas_pow_mac)+'\t'
+        w.write(wynik_etykiety+'\n')
+        w.write(wynik_powrotne+'\n')
+        w.write(wynik_powrotne_nast+'\n')
+        w.write(wynik_powrotne_luk+'\n')
+        w.write(wynik_powrotne_mac+'\n')
