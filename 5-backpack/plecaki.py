@@ -93,14 +93,18 @@ def heurystyka(rzeczy, pojemnosc, rodzaj):
         i = 0
     else:
         i = len(rzeczy)-1
-    while(suma_pojemnosci+rzeczy[i]['size'] < pojemnosc):
-        kombinacja += 2**rzeczy[i]['number']
-        suma_pojemnosci += rzeczy[i]['size']
-        suma_wartosci += rzeczy[i]['value']
-        if(rodzaj == 'size'):
-            i += 1
-        else:
-            i -= 1
+    j = 0
+    while(j < len(rzeczy)):
+        print(f"j: {j}")
+        if(suma_pojemnosci+rzeczy[i]['size'] < pojemnosc):
+            kombinacja += 2**rzeczy[i]['number']
+            suma_pojemnosci += rzeczy[i]['size']
+            suma_wartosci += rzeczy[i]['value']
+            if(rodzaj == 'size'):
+                i += 1
+            else:
+                i -= 1
+        j+=1
     return suma_wartosci,kombinacja
 
 #tak zwana kombinacja to przechowywany int w postaci binarnej, który oznacza dla każdego przedmiotu przez 0, że nie został wzięty i przez 1, że został wzięty
@@ -215,33 +219,33 @@ for i in range(10):
     przedmioty, pojemnoscPlecaka = crafting(liczba_przedmiotow, przedmioty)
     #zadanie 2
     uzytkowa = int(pojemnoscPlecaka/2)
-    pusta, czas = czas_wykonania(plecak_pojedyncze,uzytkowa, przedmioty)
-    wynik_czas_dynamiczne_05 += str(czas)+'\t'
-    pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, False)
-    wynik_czas_pelny_noneliminacja_05 += str(czas)+'\t'
-    pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, True)
-    wynik_czas_pelny_eliminacja_05 += str(czas)+'\t'
+    # pusta, czas = czas_wykonania(plecak_pojedyncze,uzytkowa, przedmioty)
+    # wynik_czas_dynamiczne_05 += str(czas)+'\t'
+    # pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, False)
+    # wynik_czas_pelny_noneliminacja_05 += str(czas)+'\t'
+    # pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, True)
+    # wynik_czas_pelny_eliminacja_05 += str(czas)+'\t'
     pusta, czas = czas_wykonania(heurystyka,przedmioty, uzytkowa, 'ratio')
     wynik_czas_heurystyka_ratio_05 += str(czas)+'\t'
     #zadanie 3
     #b=0.25
     uzytkowa = int(pojemnoscPlecaka *0.25)
-    pusta, czas = czas_wykonania(plecak_pojedyncze,uzytkowa, przedmioty)
-    wynik_czas_dynamiczne_025 += str(czas) + '\t'
-    pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, False)
-    wynik_czas_pelny_noneliminacja_025 += str(czas) + '\t'
-    pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, True)
-    wynik_czas_pelny_eliminacja_025 += str(czas) + '\t'
+    # pusta, czas = czas_wykonania(plecak_pojedyncze,uzytkowa, przedmioty)
+    # wynik_czas_dynamiczne_025 += str(czas) + '\t'
+    # pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, False)
+    # wynik_czas_pelny_noneliminacja_025 += str(czas) + '\t'
+    # pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, True)
+    # wynik_czas_pelny_eliminacja_025 += str(czas) + '\t'
     pusta, czas = czas_wykonania(heurystyka,przedmioty, uzytkowa, 'ratio')
     wynik_czas_heurystyka_ratio_025 += str(czas) + '\t'
     #b=0.75
     uzytkowa = int(pojemnoscPlecaka * 0.75)
-    pusta, czas = czas_wykonania(plecak_pojedyncze,uzytkowa, przedmioty)
-    wynik_czas_dynamiczne_075 += str(czas) + '\t'
-    pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, False)
-    wynik_czas_pelny_noneliminacja_075 += str(czas) + '\t'
-    pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, True)
-    wynik_czas_pelny_eliminacja_075 += str(czas) + '\t'
+    # pusta, czas = czas_wykonania(plecak_pojedyncze,uzytkowa, przedmioty)
+    # wynik_czas_dynamiczne_075 += str(czas) + '\t'
+    # pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, False)
+    # wynik_czas_pelny_noneliminacja_075 += str(czas) + '\t'
+    # pusta, czas = czas_wykonania(pelny_przeglad_eliminacja,przedmioty, 0, 0, uzytkowa, True)
+    # wynik_czas_pelny_eliminacja_075 += str(czas) + '\t'
     pusta, czas = czas_wykonania(heurystyka,przedmioty, uzytkowa, 'ratio')
     wynik_czas_heurystyka_ratio_075 += str(czas) + '\t'
     #zadanie 4
